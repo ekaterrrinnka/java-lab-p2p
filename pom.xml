@@ -7,7 +7,7 @@
     <artifactId>java-lab-p2p</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>Java Lab P2P</name>
-    <description>simple lab project for spring boot p2p monitor</description>
+    <description>start lab project for spring boot p2p monitor</description>
 
     <properties>
         <java.version>17</java.version>
