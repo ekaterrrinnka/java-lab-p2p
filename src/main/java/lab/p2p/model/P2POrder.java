@@ -13,7 +13,7 @@ public class P2POrder {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String type; // BUY / SELL
+    private String type;
     private BigDecimal price;
     private BigDecimal minLimit;
     private BigDecimal maxLimit;

@@ -2,57 +2,64 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>P2P Monitor</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 24px; }
-        h1 { margin-bottom: 8px; }
-        .card { border: 1px solid #ddd; padding: 16px; border-radius: 8px; margin-bottom: 24px; }
-        table { border-collapse: collapse; width: 100%; }
-        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-        th { background-color: #f5f5f5; }
-    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}"/>
 </head>
 <body>
-<h1>P2P дашборд</h1>
+<div class="page-wrap">
+    <header class="hero">
+        <h1>P2P дашборд</h1>
+        <p>Моніторинг спреду та ордерів у реальному часі</p>
+    </header>
 
-<div class="card">
-    <h2>Спред Mono / Abank (UAH)</h2>
-    <p th:if="${spread != null}">
-        Mono: <b th:text="${spread.monoPrice}">-</b>,
-        Abank: <b th:text="${spread.abankPrice}">-</b><br/>
-        Спред: <b th:text="${spread.spread}">-</b>
-        (<span th:text="${spread.spreadPercent}">-</span>%)
-    </p>
-    <p th:if="${spread == null}">Немає даних для спреду.</p>
-</div>
+    <div class="card">
+        <h2>Спред Mono / Abank (UAH)</h2>
+        <p class="spread-lines" th:if="${spread != null}">
+            Mono: <b class="mono accent" th:text="${spread.monoPrice}">-</b>,
+            Abank: <b class="mono accent" th:text="${spread.abankPrice}">-</b><br/>
+            Спред: <b class="mono" th:text="${spread.spread}">-</b>
+            (<span class="mono accent" th:text="${spread.spreadPercent}">-</span>%)
+        </p>
+        <p class="empty-hint" th:if="${spread == null}">Немає даних для спреду.</p>
+    </div>
 
-<div class="card">
-    <h2>P2P ордери</h2>
-    <table>
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Тип</th>
-            <th>Ціна</th>
-            <th>Мін. ліміт</th>
-            <th>Макс. ліміт</th>
-            <th>Фіат</th>
-            <th>Метод оплати</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="o : ${orders}">
-            <td th:text="${o.id}">1</td>
-            <td th:text="${o.type}">BUY</td>
-            <td th:text="${o.price}">0</td>
-            <td th:text="${o.minLimit}">0</td>
-            <td th:text="${o.maxLimit}">0</td>
-            <td th:text="${o.fiatCurrency}">UAH</td>
-            <td th:text="${o.paymentMethod}">MONOBANK</td>
-        </tr>
-        </tbody>
-    </table>
+    <div class="card">
+        <h2>P2P ордери</h2>
+        <div class="table-scroll">
+            <table>
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Тип</th>
+                    <th>Ціна</th>
+                    <th>Мін. ліміт</th>
+                    <th>Макс. ліміт</th>
+                    <th>Фіат</th>
+                    <th>Метод оплати</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="o : ${orders}">
+                    <td class="mono" th:text="${o.id}">1</td>
+                    <td>
+                        <span class="badge"
+                              th:classappend="${o.type == 'BUY'} ? ' badge-buy' : ' badge-sell'"
+                              th:text="${o.type}">BUY</span>
+                    </td>
+                    <td class="mono" th:text="${o.price}">0</td>
+                    <td class="mono" th:text="${o.minLimit}">0</td>
+                    <td class="mono" th:text="${o.maxLimit}">0</td>
+                    <td th:text="${o.fiatCurrency}">UAH</td>
+                    <td th:text="${o.paymentMethod}">MONOBANK</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 </body>
 </html>
-
